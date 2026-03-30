@@ -1,0 +1,1 @@
+# automated-newsletter-agent
