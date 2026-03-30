@@ -1,0 +1,245 @@
+{
+  "name": "automated-newsletter-agent",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Automated Newsletter Agent",
+        "formDescription": "An intelligent n8n workflow that automates the creation and delivery of newsletters. It collects content from multiple sources such as RSS feeds, emails, or databases, curates and formats it, and distributes personalized updates to subscribers on a schedule. This agent streamlines communication, reduces manual effort, and ensures timely, relevant content reaches the audience consistently.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "placeholder": "Enter your name:",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "placeholder": "example@gmail.com",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Phone number",
+              "fieldType": "number",
+              "placeholder": "01640878798",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b9f81e6d-2c6d-423f-a87c-4e321986b991",
+      "name": "On form submission",
+      "webhookId": "bea1aaa4-25e2-4106-b8ed-283825ef6b74"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Name:{{ $json.Name }}\nEmail:{{ $json.Email }}\nphone number:{{ $json['Phone number'] }}\nSubmit date:{{ $json.submittedAt }}",
+        "options": {
+          "systemMessage": "You are an AI-powered Automated Newsletter Agent responsible for generating professional HTML email templates.\n\nYour task is to create a clean, modern, and visually appealing confirmation email when a user successfully submits a newsletter form.\n\nThe email must:\n- Greet the user in a friendly and professional tone using their name\n- Clearly confirm that the form submission was successful\n- Inform the user that they are now subscribed to the newsletter\n- Optionally suggest next steps such as managing preferences or updating subscription settings\n- Include a clear call-to-action button (e.g., \"Manage Preferences\" or \"Explore More\")\n- Use proper HTML structure with inline CSS styling\n- Follow a modern and professional design (header, body, footer, responsive layout)\n- Use balanced colors, readable typography, and a clean layout suitable for email clients\n\nEnsure the output is:\n- Fully valid HTML\n- Ready to send via email (no explanations, only HTML)\n- Compatible with common email clients (Gmail, Outlook, etc.)\n\nKeep the tone professional, friendly, and concise."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "a08f85cf-e770-4f80-9e30-662c72eaea17",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "0afc6a13-2fa0-4fde-808a-ef1ffe366413",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "vclxJJ2PRGiL71Gu",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1JOLj24cdDl6jLp-DCag8GACEHts02vYG_qGZYPGKYtA",
+          "mode": "list",
+          "cachedResultName": "Automated Newsletter Agent Database",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1JOLj24cdDl6jLp-DCag8GACEHts02vYG_qGZYPGKYtA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1JOLj24cdDl6jLp-DCag8GACEHts02vYG_qGZYPGKYtA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Name', ``, 'string') }}",
+            "Email": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Email', ``, 'string') }}",
+            "Phone number": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Phone_number', ``, 'string') }}",
+            "Submit date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Submit_date', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone number",
+              "displayName": "Phone number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Submit date",
+              "displayName": "Submit date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        352,
+        208
+      ],
+      "id": "8eabcb1a-e392-4086-b685-be990f3a345c",
+      "name": "Google Sheet Database",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "aj1JejHGUX0OFMst",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('On form submission').item.json.Email }}",
+        "subject": "“You Have a Successful Automated Newsletter Agent” ✅",
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        0
+      ],
+      "id": "fcf76471-3d17-4181-8445-41f528267ee3",
+      "name": "Send a message",
+      "webhookId": "40753da0-ee6d-4cac-b7b6-cece5f59fbf9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Y2LlZyRCwfzp0LNG",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheet Database": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "5e32851e-0ed0-4338-ba73-5a7044c4921f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7ace3de674e29f897335e21cb7c2cdb3f86fa429fcc502ff42f1102b9aa89555"
+  },
+  "id": "fNqlvAaNagXy0cVy",
+  "tags": []
+}
