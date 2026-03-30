@@ -1,5 +1,13 @@
 # 🤖 Automated Newsletter Agent (n8n Workflow)
 
+## 🌐 Live Demo
+
+🔗 Temporary Demo Link:  
+https://transsolid-tambra-subvitreous.ngrok-free.dev
+
+⚠️ Note:
+This is a temporary ngrok link. The workflow will only be accessible when the local server is running.
+
 An intelligent workflow built using n8n that automates newsletter form submission handling, data storage, and email notifications using AI.
 
 ---
